@@ -19,6 +19,13 @@ namespace AAI.WEB.Controllers
             return View();
         }
 
+
+        void SpeechSplit(string text)
+        {
+
+
+        }
+
         #region 语音合成
         /// <summary>
         /// 语音合成
@@ -31,7 +38,7 @@ namespace AAI.WEB.Controllers
         /// <param name="mp3Filename"></param>
         /// <returns></returns>
         public string TextToSpeech(string appid, string secretid, string secretkey, string text, string mp3AbsolutePath = "", string mp3Filename = "")
-        {
+      {
             //边界符
             var boundary = "-------------------" + DateTime.Now.Ticks.ToString("x");
 
@@ -256,11 +263,12 @@ namespace AAI.WEB.Controllers
         }
         #endregion
 
+        #region 入口
         public void SendPost()
         {
-            var appid = "1253324443";
-            var secretid = "AKIDKZeR7gZRdifS7dq87wFUgstnWApKKx8H";
-            var secretkey = "DF8qfU8jDXhZM0WzJXcqwtgLtHVn4GNN";
+            var appid = "";
+            var secretid = "";
+            var secretkey = "";
 
             TextToSpeech(appid, secretid, secretkey, "Hello World！");
 
@@ -314,5 +322,34 @@ namespace AAI.WEB.Controllers
             //var resJson = JObject.Parse(responseContent);
             //Base64ToAudio(resJson.Value<string>("speech"), "D://Audio/");
         }
+        #endregion
+
+        #region 生成推流地址，bizid=7490,房间号为bizid+编辑id，txTime当前时间为16进制时间戳
+        public string createLivePushStream()
+        {
+            string adviser_id = "";
+            string bizid = "";
+            string stream_id = bizid + "_" + adviser_id;
+            string key = "";
+            string currentTime = ConvertDateTimeHex(DateTime.Now.AddDays(1));
+            string txSecret = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(key + stream_id + currentTime, "MD5").ToLower();
+            string pushURL = string.Format("rtmp://{0}.livepush.myqcloud.com/live/{1}?bizid={0}&txSecret={2}&txTime={3}", bizid, stream_id, txSecret, currentTime);
+            string playURLRTMP = string.Format("rtmp://{0}.liveplay.myqcloud.com/live/{1}", bizid, stream_id);
+            string playURLFlv = string.Format("rtmp://{0}.liveplay.myqcloud.com/live/{1}.flv", bizid, stream_id);
+            string playURLHls = string.Format("rtmp://{0}.liveplay.myqcloud.com/live/{1}.m3u8", bizid, stream_id);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new { pushURL = pushURL, playURLRTMP = playURLRTMP, playURLFlv = playURLFlv, playURLHls = playURLHls });
+        }
+
+        // <summary>    
+        /// DateTime时间格式转换为Unix时间戳格式    
+        /// </summary>    
+        /// <param name="time"> DateTime时间格式</param>    
+        /// <returns>Unix时间戳格式</returns>    
+        public static string ConvertDateTimeHex(System.DateTime time)
+        {
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            return ((int)(time - startTime).TotalSeconds).ToString("X");
+        }
+        #endregion
     }
 }
