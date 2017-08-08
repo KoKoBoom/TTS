@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AipSdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\API\green-csharp-sdk\Baidu.OCR\dll\AipSdk.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -121,6 +125,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_LocalResources\2017年8月8日 16_49_17.wav" />
+    <Content Include="DLL\AipSdk.dll" />
+    <Content Include="DLL\AipSdk.XML" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -129,6 +136,7 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Controllers\SpeechController.cs" />
+    <Compile Include="Controllers\SpeechRecognitionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,6 +159,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="audio\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\SpeechRecognition\" />
     <Folder Include="Views\Speech\" />
   </ItemGroup>
   <PropertyGroup>

@@ -22,8 +22,6 @@ namespace AAI.WEB.Controllers
 
         void SpeechSplit(string text)
         {
-
-
         }
 
         #region 语音合成
@@ -327,10 +325,10 @@ namespace AAI.WEB.Controllers
         #region 生成推流地址，bizid=7490,房间号为bizid+编辑id，txTime当前时间为16进制时间戳
         public string createLivePushStream()
         {
-            string adviser_id = "";
-            string bizid = "";
+            string adviser_id = "4396";
+            string bizid = "7490";
             string stream_id = bizid + "_" + adviser_id;
-            string key = "";
+            string key = "b1a0b0d230e308ba668276a823db4d90";
             string currentTime = ConvertDateTimeHex(DateTime.Now.AddDays(1));
             string txSecret = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(key + stream_id + currentTime, "MD5").ToLower();
             string pushURL = string.Format("rtmp://{0}.livepush.myqcloud.com/live/{1}?bizid={0}&txSecret={2}&txTime={3}", bizid, stream_id, txSecret, currentTime);
@@ -351,5 +349,8 @@ namespace AAI.WEB.Controllers
             return ((int)(time - startTime).TotalSeconds).ToString("X");
         }
         #endregion
+
+
+
     }
 }

@@ -16,7 +16,7 @@ namespace AAI.WEB
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Speech", action = "SendPost", id = UrlParameter.Optional }
+                defaults: new { controller = "Speech", action = "createLivePushStream", id = UrlParameter.Optional }
             );
         }
     }
